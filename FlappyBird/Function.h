@@ -24,7 +24,21 @@ const int COLOR_KEY_B = 180;
 
 const int RENDER_DRAW_COLOR = 0xff;
 
+const int TILE_SIZE = 50;
 
+const int MAX_MAP_X = 400;
+const int MAX_MAP_Y = 10;
+typedef struct Map
+{
+	int start_x_;
+	int start_y_;
+
+	int max_x_;
+	int max_y_;
+
+	int tile[MAX_MAP_Y][MAX_MAP_X];
+	//char gif ddo
+};
 
 
 #endif // !FUNCTION_H

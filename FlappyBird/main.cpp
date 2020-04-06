@@ -3,6 +3,7 @@
 #include <iostream>
 #include "Function.h"
 #include "Game.h"
+#include "FlappyBirdMap.h"
 
 
 Game gBackground;
@@ -65,7 +66,9 @@ int main(int argc, char* argv[])
 	if (LoadBackground() == false)
 		return -5;
 
-
+	FlappyBirdMap game_map;
+	game_map.LoadMap();
+	game_map.LoadTiles(gScreen);
 
 
 	bool is_quit = false;
@@ -84,7 +87,7 @@ int main(int argc, char* argv[])
 		SDL_RenderClear(gScreen);
 		gBackground.Render(gScreen, NULL);
 		
-
+		game_map.DrawMap(gScreen);
 
 		SDL_RenderPresent(gScreen);
 
