@@ -10,7 +10,7 @@
 #include <SDL_ttf.h>
 
 static SDL_Window* gWindow = NULL;
-static SDL_Renderer* gScreen = NULL;
+static SDL_Renderer* gRenderer = NULL;
 static SDL_Event gEvent;
 
 const int SCREEN_WIDTH = 900;
@@ -38,6 +38,15 @@ typedef struct Map
 
 	int tile[MAX_MAP_Y][MAX_MAP_X];
 	//char gif ddo
+};
+
+typedef struct Input
+{
+	int left_;
+	int right_;
+
+	int down_;
+	int up_;
 };
 
 

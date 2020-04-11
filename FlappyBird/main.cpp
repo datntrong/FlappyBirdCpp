@@ -7,15 +7,14 @@
 
 
 Game gBackground;
-
-bool Init()
+bool init()
 {
 	bool success = true;
 	int ret = SDL_Init(SDL_INIT_VIDEO);
 	if (ret < 0) return false;
 
 	SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "1");
-	gWindow = SDL_CreateWindow("Flappy Bird",
+	gWindow = SDL_CreateWindow("Game",
 		SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED,
 		SCREEN_WIDTH, SCREEN_HEIGHT,
 		SDL_WINDOW_SHOWN);
@@ -25,12 +24,12 @@ bool Init()
 	}
 	else
 	{
-		gScreen = SDL_CreateRenderer(gWindow, -1, SDL_RENDERER_ACCELERATED);
-		if (gScreen == NULL)
+		gRenderer = SDL_CreateRenderer(gWindow, -1, SDL_RENDERER_ACCELERATED);
+		if (gRenderer == NULL)
 			success = false;
 		else
 		{
-			SDL_SetRenderDrawColor(gScreen, RENDER_DRAW_COLOR, RENDER_DRAW_COLOR, RENDER_DRAW_COLOR, RENDER_DRAW_COLOR);
+			SDL_SetRenderDrawColor(gRenderer, RENDER_DRAW_COLOR, RENDER_DRAW_COLOR, RENDER_DRAW_COLOR, RENDER_DRAW_COLOR);
 			int imgFlags = IMG_INIT_PNG;
 			if (!(IMG_Init(imgFlags) && imgFlags))
 				success = false;
@@ -40,9 +39,10 @@ bool Init()
 }
 
 
+
 bool LoadBackground()
 {
-	bool ret = gBackground.LoadImage("Image//background.png", gScreen);
+	bool ret = gBackground.LoadImage("Image//background.png", gRenderer);
 	if (ret == false)
 		return false;
 	return true;
@@ -51,8 +51,8 @@ bool LoadBackground()
 void close()
 {
 	gBackground.Free();
-	SDL_DestroyRenderer(gScreen);
-	gScreen = NULL;
+	SDL_DestroyRenderer(gRenderer);
+	gRenderer = NULL;
 	SDL_DestroyWindow(gWindow);
 	gWindow = NULL;
 	IMG_Quit;
@@ -61,35 +61,39 @@ void close()
 
 int main(int argc, char* argv[])
 {
-	if (Init() == false)
+	if (init() == false)
 		return -1;
 	if (LoadBackground() == false)
 		return -5;
 
 	FlappyBirdMap game_map;
 	game_map.LoadMap();
-	game_map.LoadTiles(gScreen);
+	game_map.LoadTiles(gRenderer);
 
 
-	bool is_quit = false;
-	while (!is_quit)
+	bool quit = false;
+	while (!quit)
 	{
 		while (SDL_PollEvent(&gEvent) != 0)
 		{
 			if (gEvent.type == SDL_QUIT)
 			{
-				is_quit = true;
+				quit = true;
 			}
 
 		}
 
-		SDL_SetRenderDrawColor(gScreen, RENDER_DRAW_COLOR, RENDER_DRAW_COLOR, RENDER_DRAW_COLOR, RENDER_DRAW_COLOR);
-		SDL_RenderClear(gScreen);
-		gBackground.Render(gScreen, NULL);
+		SDL_SetRenderDrawColor(gRenderer, RENDER_DRAW_COLOR, RENDER_DRAW_COLOR, RENDER_DRAW_COLOR, RENDER_DRAW_COLOR);
+		SDL_RenderClear(gRenderer);
+		gBackground.Render(gRenderer, NULL);
 		
-		game_map.DrawMap(gScreen);
+		game_map.DrawMap(gRenderer);
 
-		SDL_RenderPresent(gScreen);
+
+
+
+
+		SDL_RenderPresent(gRenderer);
 
 
 	}
