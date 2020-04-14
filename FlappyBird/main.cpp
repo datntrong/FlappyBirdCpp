@@ -4,6 +4,7 @@
 #include "Function.h"
 #include "Game.h"
 #include "FlappyBirdMap.h"
+#include "Bird.h"
 
 
 Game gBackground;
@@ -70,6 +71,10 @@ int main(int argc, char* argv[])
 	game_map.LoadMap();
 	game_map.LoadTiles(gRenderer);
 
+	LTexture bird;
+	bird.loadFromFile("Image//bird.png", gRenderer);
+	bird.loadMedia();
+	
 
 	bool quit = false;
 	while (!quit)
@@ -83,15 +88,15 @@ int main(int argc, char* argv[])
 
 		}
 
+
 		SDL_SetRenderDrawColor(gRenderer, RENDER_DRAW_COLOR, RENDER_DRAW_COLOR, RENDER_DRAW_COLOR, RENDER_DRAW_COLOR);
 		SDL_RenderClear(gRenderer);
 		gBackground.Render(gRenderer, NULL);
 		
 		game_map.DrawMap(gRenderer);
 
-
-
-
+		
+		bird.render(gRenderer);
 
 		SDL_RenderPresent(gRenderer);
 

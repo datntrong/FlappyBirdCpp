@@ -2,18 +2,19 @@
 
 
 
-const int WALKING_ANIMATION_FRAMES = 4;
-SDL_Rect gSpriteClips[WALKING_ANIMATION_FRAMES];
-LTexture gSpriteSheetTexture;
-
-
-
 LTexture::LTexture()
 {
 	//Initialize
 	mTexture = NULL;
 	mWidth = 0;
 	mHeight = 0;
+	frame = 0;
+	xval = 0;
+	yval = 0;
+	xpos = 0;
+	ypos = 0;
+
+
 }
 
 LTexture::~LTexture()
@@ -22,45 +23,16 @@ LTexture::~LTexture()
 	free();
 }
 
-bool LTexture::loadFromFile(std::string path)
+bool LTexture::loadFromFile(std::string path,SDL_Renderer* renderer)
 {
-	//Get rid of preexisting texture
-	free();
-
-	//The final texture
-	SDL_Texture* newTexture = NULL;
-
-	//Load image at specified path
-	SDL_Surface* loadedSurface = IMG_Load(path.c_str());
-	if (loadedSurface == NULL)
+	bool success = Game::LoadImage(path, renderer);
+	if (success == true)
 	{
-		printf("Unable to load image %s! SDL_image Error: %s\n", path.c_str(), IMG_GetError());
-	}
-	else
-	{
-		//Color key image
-		SDL_SetColorKey(loadedSurface, SDL_TRUE, SDL_MapRGB(loadedSurface->format, 0, 0xFF, 0xFF));
-
-		//Create texture from surface pixels
-		newTexture = SDL_CreateTextureFromSurface(gRenderer, loadedSurface);
-		if (newTexture == NULL)
-		{
-			printf("Unable to create texture from %s! SDL Error: %s\n", path.c_str(), SDL_GetError());
-		}
-		else
-		{
-			//Get image dimensions
-			mWidth = loadedSurface->w;
-			mHeight = loadedSurface->h;
-		}
-
-		//Get rid of old loaded surface
-		SDL_FreeSurface(loadedSurface);
+		mWidth = rect_.w / 4;
+		mHeight = rect_.h / 4;
 	}
 
-	//Return success
-	mTexture = newTexture;
-	return mTexture != NULL;
+	return success;
 }
 
 void LTexture::free()
@@ -93,20 +65,35 @@ void LTexture::setAlpha(Uint8 alpha)
 	SDL_SetTextureAlphaMod(mTexture, alpha);
 }
 
-void LTexture::render(int x, int y, SDL_Rect* clip)
+void LTexture::render(SDL_Renderer* renderer)
 {
+
+	loadFromFile("Image//bird.png", renderer);
+
+	++frame;
+
+	if (frame / 4 >= WALKING_ANIMATION_FRAMES)
+	{
+		frame = 0;
+	}
+
+	rect_.x = xpos;
+	rect_.y = ypos;
+
+
+	SDL_Rect* currentClip = &gSpriteClips[frame / 4];
 	//Set rendering space and render to screen
-	SDL_Rect renderQuad = { x, y, mWidth, mHeight };
+	SDL_Rect renderQuad = { rect_.x ,rect_.y , mWidth, mHeight };
 
 	//Set clip rendering dimensions
-	if (clip != NULL)
+	if (currentClip != NULL)
 	{
-		renderQuad.w = clip->w;
-		renderQuad.h = clip->h;
+		renderQuad.w = currentClip->w;
+		renderQuad.h = currentClip->h;
 	}
 
 	//Render to screen
-	SDL_RenderCopy(gRenderer, mTexture, clip, &renderQuad);
+	SDL_RenderCopy(renderer, gTexture, currentClip, &renderQuad);
 }
 
 int LTexture::getWidth()
@@ -119,20 +106,10 @@ int LTexture::getHeight()
 	return mHeight;
 }
 
-bool loadMedia()
-{
-	//Loading success flag
-	bool success = true;
 
-	//Load sprite sheet texture
-	if (!gSpriteSheetTexture.loadFromFile("foo.png"))
-	{
-		printf("Failed to load walking animation texture!\n");
-		success = false;
-	}
-	else
-	{
-		//Set sprite clips
+void LTexture:: loadMedia()
+{
+	
 		gSpriteClips[0].x = 0;
 		gSpriteClips[0].y = 0;
 		gSpriteClips[0].w = 64;
@@ -152,8 +129,6 @@ bool loadMedia()
 		gSpriteClips[3].y = 0;
 		gSpriteClips[3].w = 64;
 		gSpriteClips[3].h = 205;
-	}
-
-	return success;
+	
 }
 

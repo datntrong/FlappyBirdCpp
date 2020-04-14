@@ -22,7 +22,7 @@ const int COLOR_KEY_G = 175;
 const int COLOR_KEY_B = 180;
 
 
-const int RENDER_DRAW_COLOR = 0xff;
+const int RENDER_DRAW_COLOR = 0xFF;
 
 const int TILE_SIZE = 50;
 
