@@ -4,23 +4,20 @@
 
 LTexture::LTexture()
 {
-	//Initialize
-	mTexture = NULL;
+	
 	mWidth = 0;
 	mHeight = 0;
-	frame = 0;
+	
 	xval = 0;
 	yval = 0;
 	xpos = 0;
 	ypos = 0;
 
-
+	onground = false;
 }
 
-LTexture::~LTexture()
-{
-	//Deallocate
-	free();
+LTexture::~LTexture() {
+
 }
 
 bool LTexture::loadFromFile(std::string path,SDL_Renderer* renderer)
@@ -28,60 +25,28 @@ bool LTexture::loadFromFile(std::string path,SDL_Renderer* renderer)
 	bool success = Game::LoadImage(path, renderer);
 	if (success == true)
 	{
-		mWidth = rect_.w / 4;
-		mHeight = rect_.h / 4;
+		mWidth = rect_.w ;
+		mHeight = rect_.h ;
 	}
 
 	return success;
 }
 
-void LTexture::free()
-{
-	//Free texture if it exists
-	if (mTexture != NULL)
-	{
-		SDL_DestroyTexture(mTexture);
-		mTexture = NULL;
-		mWidth = 0;
-		mHeight = 0;
-	}
-}
 
-void LTexture::setColor(Uint8 red, Uint8 green, Uint8 blue)
-{
-	//Modulate texture rgb
-	SDL_SetTextureColorMod(mTexture, red, green, blue);
-}
-
-void LTexture::setBlendMode(SDL_BlendMode blending)
-{
-	//Set blending function
-	SDL_SetTextureBlendMode(mTexture, blending);
-}
-
-void LTexture::setAlpha(Uint8 alpha)
-{
-	//Modulate texture alpha
-	SDL_SetTextureAlphaMod(mTexture, alpha);
-}
 
 void LTexture::render(SDL_Renderer* renderer)
 {
 
-	loadFromFile("Image//bird.png", renderer);
+	loadFromFile("Image//bird2.png", renderer);
 
-	++frame;
+	
 
-	if (frame / 4 >= WALKING_ANIMATION_FRAMES)
-	{
-		frame = 0;
-	}
 
 	rect_.x = xpos;
 	rect_.y = ypos;
 
 
-	SDL_Rect* currentClip = &gSpriteClips[frame / 4];
+	SDL_Rect* currentClip = NULL;
 	//Set rendering space and render to screen
 	SDL_Rect renderQuad = { rect_.x ,rect_.y , mWidth, mHeight };
 
@@ -94,41 +59,99 @@ void LTexture::render(SDL_Renderer* renderer)
 
 	//Render to screen
 	SDL_RenderCopy(renderer, gTexture, currentClip, &renderQuad);
-}
-
-int LTexture::getWidth()
-{
-	return mWidth;
-}
-
-int LTexture::getHeight()
-{
-	return mHeight;
-}
-
-
-void LTexture:: loadMedia()
-{
-	
-		gSpriteClips[0].x = 0;
-		gSpriteClips[0].y = 0;
-		gSpriteClips[0].w = 64;
-		gSpriteClips[0].h = 205;
-
-		gSpriteClips[1].x = 64;
-		gSpriteClips[1].y = 0;
-		gSpriteClips[1].w = 64;
-		gSpriteClips[1].h = 205;
-
-		gSpriteClips[2].x = 128;
-		gSpriteClips[2].y = 0;
-		gSpriteClips[2].w = 64;
-		gSpriteClips[2].h = 205;
-
-		gSpriteClips[3].x = 196;
-		gSpriteClips[3].y = 0;
-		gSpriteClips[3].w = 64;
-		gSpriteClips[3].h = 205;
+	//Go to next frame
 	
 }
+void LTexture::Inputkeyboard(SDL_Event e, SDL_Renderer* renderer)
+{
+	if (e.type == SDL_KEYDOWN)
+	{
+		switch (e.key.keysym.sym)
+		{
+		case SDLK_UP:
+		{
+			status = JUMB_UP;
+			input.up_ = 1;
+		}
+			break;
+		}
+	}
+}
+
+
+void LTexture::Player(Map& map_data)
+{
+	xval = 0;
+	yval += GRAVITY_SPEED;
+
+	if (yval >= MAX_SPEED) yval = MAX_SPEED;
+
+
+	xpos += xval;
+	ypos += yval;
+
+	Checkmap(map_data);
+}
+
+
+void LTexture::Checkmap(Map& map_data)
+{
+	int x1 = 0;
+	int x2 = 0;
+
+	int y1 = 0;
+	int y2 = 0;
+
+	int height_min = mHeight < TILE_SIZE ? mHeight : TILE_SIZE;
+
+	x1 = (xpos + xval) / TILE_SIZE;
+
+	x2 = (xpos + xval + mWidth - 1) / TILE_SIZE;
+
+	y1 = (ypos) / TILE_SIZE;
+	y2 = (ypos + height_min - 1) / TILE_SIZE;
+
+	if (x1 >= 0 && x2 < MAX_MAP_X && y1 >= 0 && y2 < MAX_MAP_Y)
+	{
+		if (xval > 0)
+		{
+			if (map_data.tile[y1][x2] != 0 || map_data.tile[y2][x2] != 0)
+			{
+				xpos = x2 * TILE_SIZE;
+				xpos = mWidth + 1;
+				xval = 0;
+			}
+		}
+	}
+
+
+
+	int width_min = mWidth < TILE_SIZE ? mWidth : TILE_SIZE;
+	x1 = (xpos) / TILE_SIZE;
+	x2 = (xpos + width_min) / TILE_SIZE;
+
+	y1 = (ypos + yval) / TILE_SIZE;
+	y2 = (ypos + yval + mHeight - 1) / TILE_SIZE;
+
+	if (x1 >= 0 && x2 < MAX_MAP_Y && y1 >= 0 && y2 < MAX_MAP_Y)
+	{
+		if (yval > 0)
+		{
+			if (map_data.tile[y2][x1] != 0 || map_data.tile[y2][x2] != 0)
+			{
+				ypos = y2 * TILE_SIZE;
+				ypos -= (mHeight + 1);
+				yval = 0;
+				onground = true;
+			}
+		}
+
+	}
+	ypos += yval;
+}
+
+
+
+		
+	
 

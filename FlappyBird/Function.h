@@ -17,9 +17,9 @@ const int SCREEN_WIDTH = 900;
 const int SCREEN_HEIGHT = 500;
 const int SCREEN_BPP = 32;
 
-const int COLOR_KEY_R = 167;
-const int COLOR_KEY_G = 175;
-const int COLOR_KEY_B = 180;
+const int COLOR_KEY_R = 0;
+const int COLOR_KEY_G = 0xFF;
+const int COLOR_KEY_B = 0xFF;
 
 
 const int RENDER_DRAW_COLOR = 0xFF;
@@ -42,8 +42,6 @@ typedef struct Map
 
 typedef struct Input
 {
-	int left_;
-	int right_;
 
 	int down_;
 	int up_;

@@ -1,6 +1,5 @@
-﻿  Bird.cpp
+﻿  FlappyBirdMap.cpp
 C:\Users\PC\Desktop\FlappyBird\FlappyBird\Function.h(41,2): warning C4091: 'typedef ': ignored on left of 'Map' when no variable is declared
-C:\Users\PC\Desktop\FlappyBird\FlappyBird\Function.h(50,2): warning C4091: 'typedef ': ignored on left of 'Input' when no variable is declared
-C:\Users\PC\Desktop\FlappyBird\FlappyBird\Bird.cpp(80,12): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
-C:\Users\PC\Desktop\FlappyBird\FlappyBird\Bird.cpp(81,12): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+C:\Users\PC\Desktop\FlappyBird\FlappyBird\Function.h(48,2): warning C4091: 'typedef ': ignored on left of 'Input' when no variable is declared
+C:\Users\PC\Desktop\FlappyBird\FlappyBird\FlappyBirdMap.cpp(15,15): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
   FlappyBird.vcxproj -> C:\Users\PC\Desktop\FlappyBird\Debug\FlappyBird.exe

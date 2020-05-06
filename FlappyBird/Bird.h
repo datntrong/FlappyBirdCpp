@@ -5,51 +5,38 @@
 #include "Game.h"
 #include "FlappyBirdMap.h"
 
-const int WALKING_ANIMATION_FRAMES = 4;
-
-
+const int GRAVITY_SPEED = 1;
+const int MAX_SPEED = 10;
 class LTexture : public Game
 {
 public:
-	//Initializes variables
 	LTexture();
-
-	//Deallocates memory
 	~LTexture();
-
+	
 	//Loads image at specified path
 	bool loadFromFile(std::string path,SDL_Renderer* renderer);
 
-	//Deallocates texture
-	void free();
-
-	//Set color modulation
-	void setColor(Uint8 red, Uint8 green, Uint8 blue);
-
-	//Set blending
-	void setBlendMode(SDL_BlendMode blending);
-
-	//Set alpha modulation
-	void setAlpha(Uint8 alpha);
+	enum Jumb
+	{
+		JUMB_UP = 0,
+	};
+	
 
 	//Renders texture at given point
 	void render(SDL_Renderer* renderer);
 	
-	void loadMedia();
-
-	//Gets image dimensions
-	int getWidth();
-	int getHeight();
+	
 
 
 	//Input keyboard
 	void Inputkeyboard(SDL_Event e, SDL_Renderer* renderer);
 
-private:
-	//The actual hardware texture
-	SDL_Texture* mTexture;
+	void Player(Map& map_data);
 
-	//Image dimensions
+	void Checkmap(Map& map_data);
+
+private:
+	
 	int mWidth;
 	int mHeight;
 
@@ -61,9 +48,13 @@ private:
 	float ypos;
 
 
-	SDL_Rect gSpriteClips[WALKING_ANIMATION_FRAMES];
+	
 
 	int frame;
+
+	Input input;
+	bool onground;
+	int status;
 };
 
 #endif // !BIRD_H

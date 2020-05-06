@@ -72,8 +72,8 @@ int main(int argc, char* argv[])
 	game_map.LoadTiles(gRenderer);
 
 	LTexture bird;
-	bird.loadFromFile("Image//bird.png", gRenderer);
-	bird.loadMedia();
+	bird.loadFromFile("Image//123.png", gRenderer);
+	
 	
 
 	bool quit = false;
@@ -86,6 +86,7 @@ int main(int argc, char* argv[])
 				quit = true;
 			}
 
+			bird.Inputkeyboard(gEvent, gRenderer);
 		}
 
 
@@ -94,7 +95,8 @@ int main(int argc, char* argv[])
 		gBackground.Render(gRenderer, NULL);
 		
 		game_map.DrawMap(gRenderer);
-
+		Map map_data = game_map.getMap();
+		bird.Player(map_data);
 		
 		bird.render(gRenderer);
 
