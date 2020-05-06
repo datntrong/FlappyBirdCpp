@@ -10,7 +10,7 @@ LTexture::LTexture()
 	
 	xval = 0;
 	yval = 0;
-	xpos = 0;
+	xpos = 150;
 	ypos = 0;
 
 	onground = false;
@@ -85,12 +85,12 @@ void LTexture::Player(Map& map_data)
 	yval += GRAVITY_SPEED;
 
 	if (yval >= MAX_SPEED) yval = MAX_SPEED;
-
-
+	
+	
 	xpos += xval;
 	ypos += yval;
-
 	Checkmap(map_data);
+	
 }
 
 
@@ -147,6 +147,13 @@ void LTexture::Checkmap(Map& map_data)
 		}
 
 	}
+
+
+
+	if (input.up_ == 1) {
+		yval = yval - JUMB_SPEED;
+	}
+
 	ypos += yval;
 }
 
