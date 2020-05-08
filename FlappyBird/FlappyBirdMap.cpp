@@ -9,7 +9,7 @@ void FlappyBirdMap::LoadMap()
     // Cai nay dung de tao ma tran hinh anh cho game
 
     const int hang = 10;
-    const int cot = 50;
+    const int cot = 400;
     const int kc = 4;
     int arr[hang][cot] = {};
     srand(time(0));
@@ -22,7 +22,7 @@ void FlappyBirdMap::LoadMap()
             arr[j][i] = 1;
         }
         for (int j = m + kc + 1; j < hang; j++) {
-            arr[j][i] = 1;
+            arr[j][i] = 5;
         }
 
     }
@@ -34,7 +34,7 @@ void FlappyBirdMap::LoadMap()
             arr[j][i] = 1;
         }
         for (int j = m + 1; j < hang; j++) {
-            arr[j][i] = 1;
+            arr[j][i] = 5;
         }
 
     }
@@ -123,6 +123,7 @@ void FlappyBirdMap::DrawMap(SDL_Renderer* screen)
             {
                 tile_mat[val].SetRect(j, i);
                 tile_mat[val].Render(screen);
+               
             }
             map_x++;
         }

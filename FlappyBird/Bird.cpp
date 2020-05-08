@@ -10,10 +10,13 @@ LTexture::LTexture()
 	
 	xval = 0;
 	yval = 0;
-	xpos = 150;
+	xpos = 0;
 	ypos = 0;
 
-	onground = false;
+	
+	mapx_ = 0;
+	mapy_ = 0;
+	collision = false;
 }
 
 LTexture::~LTexture() {
@@ -42,8 +45,8 @@ void LTexture::render(SDL_Renderer* renderer)
 	
 
 
-	rect_.x = xpos;
-	rect_.y = ypos;
+	rect_.x = xpos - mapx_ + 150;
+	rect_.y = ypos - mapy_;
 
 
 	SDL_Rect* currentClip = NULL;
@@ -81,16 +84,27 @@ void LTexture::Inputkeyboard(SDL_Event e, SDL_Renderer* renderer)
 
 void LTexture::Player(Map& map_data)
 {
-	xval = 0;
+	xval += SCROLLING_SPEED;;
 	yval += GRAVITY_SPEED;
 
 	if (yval >= MAX_SPEED) yval = MAX_SPEED;
-	
+	if (xval >= SCROLLING_SPEED) xval = SCROLLING_SPEED;
 	
 	xpos += xval;
 	ypos += yval;
-	Checkmap(map_data);
+
 	
+
+	if (input.up_ == 1) {
+		yval = yval - JUMB_SPEED;
+		
+		input.up_ = 0;
+	}
+
+	
+
+	Checkmap(map_data);
+	ScrollingMap(map_data);
 }
 
 
@@ -117,9 +131,13 @@ void LTexture::Checkmap(Map& map_data)
 		{
 			if (map_data.tile[y1][x2] != 0 || map_data.tile[y2][x2] != 0)
 			{
+				
 				xpos = x2 * TILE_SIZE;
 				xpos = mWidth + 1;
 				xval = 0;
+				
+				
+				collision = true;
 			}
 		}
 	}
@@ -138,11 +156,14 @@ void LTexture::Checkmap(Map& map_data)
 		if (yval > 0)
 		{
 			if (map_data.tile[y2][x1] != 0 || map_data.tile[y2][x2] != 0)
-			{
+			{	
+				
 				ypos = y2 * TILE_SIZE;
 				ypos -= (mHeight + 1);
 				yval = 0;
-				onground = true;
+				
+				
+				collision = true;
 			}
 		}
 
@@ -150,15 +171,15 @@ void LTexture::Checkmap(Map& map_data)
 
 
 
-	if (input.up_ == 1) {
-		yval = yval - JUMB_SPEED;
-	}
-
-	ypos += yval;
+	
 }
 
 
-
+void LTexture::ScrollingMap(Map& map_data)
+{
+	map_data.start_x_ = xpos;
+	map_data.start_y_ = 0;
+}
 		
 	
 

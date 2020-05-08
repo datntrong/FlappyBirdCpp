@@ -84,11 +84,12 @@ int main(int argc, char* argv[])
 			if (gEvent.type == SDL_QUIT)
 			{
 				quit = true;
+
 			}
 
 			bird.Inputkeyboard(gEvent, gRenderer);
 		}
-
+		//if (bird.cliiision() == true) quit = true;
 
 		SDL_SetRenderDrawColor(gRenderer, RENDER_DRAW_COLOR, RENDER_DRAW_COLOR, RENDER_DRAW_COLOR, RENDER_DRAW_COLOR);
 		SDL_RenderClear(gRenderer);
@@ -96,13 +97,15 @@ int main(int argc, char* argv[])
 		
 		game_map.DrawMap(gRenderer);
 		Map map_data = game_map.getMap();
+		bird.SetMapXY(map_data.start_x_, map_data.start_y_);
 		bird.Player(map_data);
 		
 		bird.render(gRenderer);
 
 		SDL_RenderPresent(gRenderer);
-
-
+		game_map.SetMap(map_data);
+		game_map.DrawMap(gRenderer);
+		SDL_Delay(100);
 	}
 	close();
 	return 0;
