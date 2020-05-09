@@ -4,11 +4,11 @@
 #include "Function.h"
 #include "Game.h"
 #include "FlappyBirdMap.h"
+
 #include "Bird.h"
 
 
 Game gBackground;
-
 
 
 bool init()
@@ -18,7 +18,7 @@ bool init()
 	if (ret < 0) return false;
 
 	SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "1");
-	gWindow = SDL_CreateWindow("Game",
+	gWindow = SDL_CreateWindow("Flappy Bird",
 		SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED,
 		SCREEN_WIDTH, SCREEN_HEIGHT,
 		SDL_WINDOW_SHOWN);
@@ -77,6 +77,8 @@ int main(int argc, char* argv[])
 	
 	if (LoadBackground() == false)
 		return -5;
+	gBackground.Render(gRenderer, NULL);
+	//printmenu(gRenderer);
 
 	FlappyBirdMap game_map;
 	game_map.LoadMap();
@@ -102,7 +104,7 @@ int main(int argc, char* argv[])
 
 			bird.Inputkeyboard(gEvent, gRenderer);
 		}
-		//if (bird.cliiision() == true) quit = true;
+		if (bird.cliiision() == true) quit = true;
 
 		SDL_SetRenderDrawColor(gRenderer, RENDER_DRAW_COLOR, RENDER_DRAW_COLOR, RENDER_DRAW_COLOR, RENDER_DRAW_COLOR);
 		SDL_RenderClear(gRenderer);
@@ -124,5 +126,22 @@ int main(int argc, char* argv[])
 		SDL_Delay(50);
 	}
 	close();
+	return 0;
+}
+
+int printmenu(SDL_Renderer* des) {
+	int statButtonX = 40;
+	int startButtonY = 300;
+	
+	int quitButtonX = 210;
+	int quitButtonY = 300;
+	
+	Game Button1, Button2;
+	Button1.LoadImage("Image//startButton.png", des);
+	Button1.SetRect(statButtonX, startButtonY);
+	Button1.Render(des, NULL);
+	Button2.LoadImage("Image//quitButton.png", des);
+	Button2.SetRect(quitButtonX, quitButtonY);
+	Button2.Render(des, NULL);
 	return 0;
 }

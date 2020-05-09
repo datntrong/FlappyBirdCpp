@@ -106,7 +106,8 @@ void LTexture::loadMedia() {
 
 
 void LTexture::Player(Map& map_data)
-{
+{	
+	xval = xval ;
 	xval += SCROLLING_SPEED;;
 	yval += GRAVITY_SPEED;
 

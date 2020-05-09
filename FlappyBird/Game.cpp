@@ -49,13 +49,6 @@ void Game::Render(SDL_Renderer* des, const SDL_Rect* clip/*=NULL*/)
 	SDL_RenderCopy(des, gTexture, clip, &renderquad);
 
 }
-void Game::Render1(SDL_Renderer* des, const SDL_Rect* clip/*=NULL*/)
-{
-	SDL_Rect renderquad = { rect_.x,rect_.y,rect_.w,rect_.h };
-
-	SDL_RenderCopy(des, gTexture, clip, &renderquad);
-
-}
 
 void Game::Free()
 {

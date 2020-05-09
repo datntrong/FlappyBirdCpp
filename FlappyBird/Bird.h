@@ -5,9 +5,9 @@
 #include "Game.h"
 #include "FlappyBirdMap.h"
 const int WALKING_ANIMATION_FRAMES = 3;
-const float GRAVITY_SPEED = 1;
-const int MAX_SPEED = 5;
-const float JUMB_SPEED = 5 ;
+const float GRAVITY_SPEED = 5;
+const int MAX_SPEED = 10;
+const float JUMB_SPEED = 30;
 const float SCROLLING_SPEED = 3;
 const float MAX_SCROLLING_SPEED = 5;
 class LTexture : public Game
