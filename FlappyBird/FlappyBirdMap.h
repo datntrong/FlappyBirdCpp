@@ -3,7 +3,7 @@
 #ifndef FLAPPYBIRD_MAP_H
 #define FLAPPYBIRD_H
 
-#include"Function.h"
+#include"SDL_utils.h"
 #include "Game.h"
 
 const int MAX_TILES = 10;

@@ -152,15 +152,15 @@
   <ItemGroup>
     <ClCompile Include="Bird.cpp" />
     <ClCompile Include="FlappyBirdMap.cpp" />
-    <ClCompile Include="Function.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="SDL_utils.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="FlappyBirdMap.h" />
-    <ClInclude Include="Function.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="Bird.h" />
+    <ClInclude Include="SDL_utils.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

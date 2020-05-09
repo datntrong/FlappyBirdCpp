@@ -4,9 +4,10 @@
 #include <ctime>
 #include <cstdlib>
 
+
 void FlappyBirdMap::LoadMap()
 {
-    // Cai nay dung de tao ma tran hinh anh cho game
+    
 
     const int hang = 10;
     const int cot = 400;
@@ -104,12 +105,12 @@ void FlappyBirdMap::DrawMap(SDL_Renderer* screen)
     map_x = game_map_.start_x_ / TILE_SIZE;
 
     x1 = (game_map_.start_x_ % TILE_SIZE) * -1;
-    x2 = x1 + SCREEN_WIDTH + (x1 == 0 ? 0 : TILE_SIZE);
+    x2 = x1 + 900 + (x1 == 0 ? 0 : TILE_SIZE); //900=SCR_WEITH
 
     map_y = game_map_.start_y_ / TILE_SIZE;
 
     y1 = (game_map_.start_y_ % TILE_SIZE) * -1;
-    y2 = y1 + SCREEN_HEIGHT + (y1 == 0 ? 0 : TILE_SIZE);
+    y2 = y1 + 500 + (y1 == 0 ? 0 : TILE_SIZE);
 
 
     for (int i = y1; i < y2; i += TILE_SIZE)

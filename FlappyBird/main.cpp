@@ -1,50 +1,22 @@
 
 
 #include <iostream>
-#include "Function.h"
+#include "SDL_utils.h"
 #include "Game.h"
 #include "FlappyBirdMap.h"
-
 #include "Bird.h"
 
 
+const int SCREEN_WIDTH = 900;
+const int SCREEN_HEIGHT = 500;
+
+const char WINDOW_TITLE[] = "Flappy Bird";
+
+SDL_Window* gWindow = NULL;
+SDL_Renderer* gRenderer = NULL;
+SDL_Event gEvent;
+
 Game gBackground;
-
-
-bool init()
-{
-	bool success = true;
-	int ret = SDL_Init(SDL_INIT_VIDEO);
-	if (ret < 0) return false;
-
-	SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "1");
-	gWindow = SDL_CreateWindow("Flappy Bird",
-		SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED,
-		SCREEN_WIDTH, SCREEN_HEIGHT,
-		SDL_WINDOW_SHOWN);
-	if (gWindow == NULL)
-	{
-		success = false;
-	}
-	else
-	{
-		gRenderer = SDL_CreateRenderer(gWindow, -1, SDL_RENDERER_ACCELERATED);
-		if (gRenderer == NULL)
-			success = false;
-		else
-		{
-			SDL_SetRenderDrawColor(gRenderer, RENDER_DRAW_COLOR, RENDER_DRAW_COLOR, RENDER_DRAW_COLOR, RENDER_DRAW_COLOR);
-			int imgFlags = IMG_INIT_PNG;
-			if (!(IMG_Init(imgFlags) && imgFlags))
-				success = false;
-		}
-	}
-
-	
-	return success;
-}
-
-
 
 bool LoadBackground()
 {
@@ -54,22 +26,11 @@ bool LoadBackground()
 	return true;
 }
 
-void close()
-{
-	gBackground.Free();
-	SDL_DestroyRenderer(gRenderer);
-	gRenderer = NULL;
-	SDL_DestroyWindow(gWindow);
-	gWindow = NULL;
-	IMG_Quit;
-	SDL_Quit();
-}
 
 int main(int argc, char* argv[])
 {
 	
-	if (init() == false)
-		return -1;
+	initSDL(gWindow, gRenderer, SCREEN_WIDTH, SCREEN_HEIGHT, WINDOW_TITLE);
 
 	
 	bool quit = false;
@@ -78,7 +39,7 @@ int main(int argc, char* argv[])
 	if (LoadBackground() == false)
 		return -5;
 	gBackground.Render(gRenderer, NULL);
-	//printmenu(gRenderer);
+	
 
 	FlappyBirdMap game_map;
 	game_map.LoadMap();
@@ -106,7 +67,7 @@ int main(int argc, char* argv[])
 		}
 		if (bird.cliiision() == true) quit = true;
 
-		SDL_SetRenderDrawColor(gRenderer, RENDER_DRAW_COLOR, RENDER_DRAW_COLOR, RENDER_DRAW_COLOR, RENDER_DRAW_COLOR);
+		SDL_SetRenderDrawColor(gRenderer, 0xFF, 0xFF, 0xFF, 0xFF);
 		SDL_RenderClear(gRenderer);
 		gBackground.Render(gRenderer, NULL);
 		
@@ -125,7 +86,7 @@ int main(int argc, char* argv[])
 		
 		SDL_Delay(50);
 	}
-	close();
+	quitSDL(gWindow, gRenderer);
 	return 0;
 }
 

@@ -1,7 +1,7 @@
 #pragma once
 #ifndef BIRD_H
 #define BIRD_H
-#include "Function.h"
+#include "SDL_utils.h"
 #include "Game.h"
 #include "FlappyBirdMap.h"
 const int WALKING_ANIMATION_FRAMES = 3;

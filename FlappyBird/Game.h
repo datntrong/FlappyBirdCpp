@@ -2,7 +2,27 @@
 #pragma once
 #ifndef GAME_H
 #define GAME_H
-#include "Function.h"
+#include "SDL_utils.h"
+
+typedef struct Map
+{
+	int start_x_;
+	int start_y_;
+
+	int max_x_;
+	int max_y_;
+
+	int tile[MAX_MAP_Y][MAX_MAP_X];
+	//char gif ddo
+};
+
+typedef struct Input
+{
+
+	int down_;
+	int up_;
+};
+
 
 
 class Game
