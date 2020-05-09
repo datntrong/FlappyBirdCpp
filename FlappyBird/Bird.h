@@ -4,11 +4,12 @@
 #include "Function.h"
 #include "Game.h"
 #include "FlappyBirdMap.h"
-
-const float GRAVITY_SPEED = 0.5;
+const int WALKING_ANIMATION_FRAMES = 3;
+const float GRAVITY_SPEED = 1;
 const int MAX_SPEED = 5;
-const float JUMB_SPEED = 20 ;
+const float JUMB_SPEED = 5 ;
 const float SCROLLING_SPEED = 3;
+const float MAX_SCROLLING_SPEED = 5;
 class LTexture : public Game
 {
 public:
@@ -36,6 +37,7 @@ public:
 	void Player(Map& map_data);
 
 	void Checkmap(Map& map_data);
+	void loadMedia();
 	void SetMapXY(const int mapx, const int mapy) { mapx_ = mapx; mapy_ = mapy; }
 	void ScrollingMap(Map& map_data) ;
 	bool cliiision() { return collision; };
@@ -62,6 +64,8 @@ private:
 	int status;
 	int mapx_;
 	int mapy_;
+
+	SDL_Rect gSpriteClips[WALKING_ANIMATION_FRAMES];
 };
 
 #endif // !BIRD_H

@@ -8,6 +8,9 @@
 
 
 Game gBackground;
+
+
+
 bool init()
 {
 	bool success = true;
@@ -36,6 +39,8 @@ bool init()
 				success = false;
 		}
 	}
+
+	
 	return success;
 }
 
@@ -62,8 +67,14 @@ void close()
 
 int main(int argc, char* argv[])
 {
+	
 	if (init() == false)
 		return -1;
+
+	
+	bool quit = false;
+
+	
 	if (LoadBackground() == false)
 		return -5;
 
@@ -72,13 +83,15 @@ int main(int argc, char* argv[])
 	game_map.LoadTiles(gRenderer);
 
 	LTexture bird;
-	bird.loadFromFile("Image//123.png", gRenderer);
-	
+	bird.loadFromFile("Image//bird3.png", gRenderer);
+	bird.loadMedia();
 	
 
-	bool quit = false;
+	
 	while (!quit)
 	{
+		
+
 		while (SDL_PollEvent(&gEvent) != 0)
 		{
 			if (gEvent.type == SDL_QUIT)
@@ -96,6 +109,7 @@ int main(int argc, char* argv[])
 		gBackground.Render(gRenderer, NULL);
 		
 		game_map.DrawMap(gRenderer);
+		
 		Map map_data = game_map.getMap();
 		bird.SetMapXY(map_data.start_x_, map_data.start_y_);
 		bird.Player(map_data);
@@ -105,7 +119,9 @@ int main(int argc, char* argv[])
 		SDL_RenderPresent(gRenderer);
 		game_map.SetMap(map_data);
 		game_map.DrawMap(gRenderer);
-		SDL_Delay(100);
+		
+		
+		SDL_Delay(50);
 	}
 	close();
 	return 0;
