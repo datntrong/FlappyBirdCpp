@@ -1,6 +1,7 @@
 #pragma once
 #ifndef BIRD_H
 #define BIRD_H
+
 #include "SDL_utils.h"
 #include "Game.h"
 #include "FlappyBirdMap.h"
@@ -10,6 +11,7 @@ const int MAX_SPEED = 10;
 const float JUMB_SPEED = 30;
 const float SCROLLING_SPEED = 3;
 const float MAX_SCROLLING_SPEED = 5;
+
 class LTexture : public Game
 {
 public:
@@ -41,7 +43,7 @@ public:
 	void SetMapXY(const int mapx, const int mapy) { mapx_ = mapx; mapy_ = mapy; }
 	void ScrollingMap(Map& map_data) ;
 	bool cliiision() { return collision; };
-	
+	int Point() { return point; }
 
 private:
 	
@@ -56,7 +58,7 @@ private:
 	float mPosY;
 
 
-	
+	int point;
 
 	int frame;
 

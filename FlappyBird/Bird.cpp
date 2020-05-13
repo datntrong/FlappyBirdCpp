@@ -12,7 +12,7 @@ LTexture::LTexture()
 	mVelY = 0;
 	mPosX = 0;
 	mPosY = 0;
-
+	point = 0;
 	frame = 0;
 	mapx_ = 0;
 	mapy_ = 0;
@@ -162,7 +162,9 @@ void LTexture::Checkmap(Map& map_data)
 	{
 		if (mVelX > 0)
 		{
-			if (map_data.tile[y1][x2] != 0 || map_data.tile[y2][x2] != 0)
+			if (map_data.tile[y1][x2] < 0 || map_data.tile[y2][x2] < 0) point++;
+
+			if (map_data.tile[y1][x2] > 0 || map_data.tile[y2][x2] > 0)
 			{
 				
 				mPosX = x2 * TILE_SIZE;
@@ -175,7 +177,7 @@ void LTexture::Checkmap(Map& map_data)
 		}
 		else if (mVelX < 0)
 		{
-			if (map_data.tile[y1][x1] != 0 || map_data.tile[y2][x1] != 0)
+			if (map_data.tile[y1][x1] > 0 || map_data.tile[y2][x1] > 0)
 			{
 				mPosX = (x1 + 1) * TILE_SIZE;
 				mVelX = 0;
@@ -197,7 +199,8 @@ void LTexture::Checkmap(Map& map_data)
 	{
 		if (mVelY > 0)
 		{
-			if (map_data.tile[y2][x1] != 0 || map_data.tile[y2][x2] != 0)
+			if (map_data.tile[y2][x1] < 0 || map_data.tile[y2][x2] < 0) point++;
+			if (map_data.tile[y2][x1] > 0 || map_data.tile[y2][x2] > 0)
 			{	
 				
 				mPosY = y2 * TILE_SIZE;
@@ -210,7 +213,8 @@ void LTexture::Checkmap(Map& map_data)
 		}
 		else if (mVelY < 0)
 		{
-			if (map_data.tile[y1][x1] != 0 || map_data.tile[y1][x2] != 0)
+			if (map_data.tile[y1][x1] < 0 || map_data.tile[y1][x2] < 0) point++;
+			if (map_data.tile[y1][x1] > 0 || map_data.tile[y1][x2] > 0)
 			{
 				mPosY = (y1 + 1) * TILE_SIZE;
 				mVelY = 0;

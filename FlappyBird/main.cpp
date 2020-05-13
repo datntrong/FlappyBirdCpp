@@ -6,16 +6,17 @@
 #include "FlappyBirdMap.h"
 #include "Bird.h"
 
-
+using namespace std;
 const int SCREEN_WIDTH = 900;
 const int SCREEN_HEIGHT = 500;
+
 
 const char WINDOW_TITLE[] = "Flappy Bird";
 
 SDL_Window* gWindow = NULL;
 SDL_Renderer* gRenderer = NULL;
 SDL_Event gEvent;
-
+TTF_Font* gFont = NULL;
 
 Game gBackground;
 
@@ -31,30 +32,31 @@ bool LoadBackground()
 int main(int argc, char* argv[])
 {
 	
-	initSDL(gWindow, gRenderer, SCREEN_WIDTH, SCREEN_HEIGHT, WINDOW_TITLE);
+	initSDL(gWindow, gRenderer, SCREEN_WIDTH, SCREEN_HEIGHT, WINDOW_TITLE,gFont);
 
-	
+	if (LoadBackground() == false)
+		return -5;
 	
 	bool quit1 = false;
 	bool quit2 = false;
 	bool quit = false;
-
-	if (LoadBackground() == false)
-		return -5;
+	bool playntime = false;
+	
 	while (!quit1)
 	{
 		while (!quit2)
 		{
+			
 			SDL_SetRenderDrawColor(gRenderer, 0xFF, 0xFF, 0xFF, 0xFF);
 			SDL_RenderClear(gRenderer);
 
 
 			gBackground.Render(gRenderer, NULL);
 
-			int statButtonX = 40;
+			int statButtonX = 153;
 			int startButtonY = 300;
 
-			int quitButtonX = 210;
+			int quitButtonX = 603;
 			int quitButtonY = 300;
 
 			int logoX = 400;
@@ -72,9 +74,6 @@ int main(int argc, char* argv[])
 			logo.Render(gRenderer, NULL);
 			SDL_RenderPresent(gRenderer);
 
-
-
-
 			while (SDL_PollEvent(&gEvent) != 0)
 			{
 				if (gEvent.type == SDL_QUIT)
@@ -89,6 +88,7 @@ int main(int argc, char* argv[])
 					if ((mouseX > statButtonX) && (mouseX < statButtonX + 145) &&
 						(mouseY > startButtonY) && (mouseY < startButtonY + 63))
 					{
+						
 						quit1 = false;
 						quit2 = true;
 
@@ -96,6 +96,7 @@ int main(int argc, char* argv[])
 					if ((mouseX > quitButtonX) && (mouseX < quitButtonX + 145) &&
 						(mouseY > quitButtonY) && (mouseY < quitButtonY + 62))
 					{
+						
 						quit2 = true;
 						quit1 = true;
 						
@@ -110,60 +111,81 @@ int main(int argc, char* argv[])
 		
 		// play one time
 		
-		FlappyBirdMap game_map;
-		game_map.LoadMap();
-		game_map.LoadTiles(gRenderer);
-
-		LTexture bird;
-		bird.loadFromFile("Image//bird3.png", gRenderer);
-		bird.loadMedia();
-
-
-		while (!quit)
+		if (!quit1)
 		{
+			FlappyBirdMap game_map;
+			game_map.LoadMap();
+			game_map.LoadTiles(gRenderer);
 
+			LTexture bird;
+			bird.loadFromFile("Image//bird3.png", gRenderer);
+			bird.loadMedia();
 
-			while (SDL_PollEvent(&gEvent) != 0)
+			int pointgame = bird.Point();
+			string Point = to_string(pointgame);
+			while (!quit)
 			{
-				if (gEvent.type == SDL_QUIT)
+
+
+				while (SDL_PollEvent(&gEvent) != 0)
 				{
+					if (gEvent.type == SDL_QUIT)
+					{
+						quit = true;
+
+					}
+
+					bird.Inputkeyboard(gEvent, gRenderer);
+				}
+				if (bird.cliiision() == true)
 					quit = true;
 
-				}
 
-				bird.Inputkeyboard(gEvent, gRenderer);
+
+				SDL_SetRenderDrawColor(gRenderer, 0xFF, 0xFF, 0xFF, 0xFF);
+				SDL_RenderClear(gRenderer);
+
+
+				gBackground.Render(gRenderer, NULL);
+
+				game_map.DrawMap(gRenderer);
+
+				Map map_data = game_map.getMap();
+				bird.SetMapXY(map_data.start_x_, map_data.start_y_);
+				bird.Player(map_data);
+
+				bird.render(gRenderer);
+
+				SDL_RenderPresent(gRenderer);
+				game_map.SetMap(map_data);
+				game_map.DrawMap(gRenderer);
+
+
+				SDL_Delay(50);
+
 			}
-			if (bird.cliiision() == true) 
-				quit = true;
 			
-
-
-			SDL_SetRenderDrawColor(gRenderer, 0xFF, 0xFF, 0xFF, 0xFF);
-			SDL_RenderClear(gRenderer);
-
-
 			gBackground.Render(gRenderer, NULL);
-
-			game_map.DrawMap(gRenderer);
-
-			Map map_data = game_map.getMap();
-			bird.SetMapXY(map_data.start_x_, map_data.start_y_);
-			bird.Player(map_data);
-
-			bird.render(gRenderer);
-
+			Game Score;
+			Score.LoadImage("Image//score.png",gRenderer);
+			Score.SetRect(364, 136);
+			Score.Render(gRenderer, NULL);
+			SDL_Color color = { 141,136,117 };
+			SDL_Surface* surface = TTF_RenderText_Solid(gFont,Point.c_str(), color);
+			SDL_Texture* texture = SDL_CreateTextureFromSurface(gRenderer,
+				surface);
+			
+			int texW = 0;
+			int texH = 0;
+			SDL_QueryTexture(texture, NULL, NULL, &texW, &texH);
+			SDL_Rect dstrect = { 440, 200, texW, texH };
+			SDL_RenderCopy(gRenderer, texture, NULL, &dstrect);
 			SDL_RenderPresent(gRenderer);
-			game_map.SetMap(map_data);
-			game_map.DrawMap(gRenderer);
-
-
-			SDL_Delay(50);
+			SDL_Delay(1000);
 		}
+		quit2 = false;	
+		quit = false;
 		
-		SDL_Delay(100);
-		
-		
-		//
 	}
 	
 

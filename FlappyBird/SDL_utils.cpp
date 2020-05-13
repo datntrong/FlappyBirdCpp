@@ -12,7 +12,7 @@ void logSDLError(std::ostream& os,
 }
 
 void initSDL(SDL_Window*& window, SDL_Renderer*& renderer,
-    int screenWidth, int screenHeight, const char* windowTitle)
+    int screenWidth, int screenHeight, const char* windowTitle, TTF_Font*& font)
 {
     if (SDL_Init(SDL_INIT_EVERYTHING) != 0)
         logSDLError(std::cout, "SDL_Init", true);
@@ -33,6 +33,9 @@ void initSDL(SDL_Window*& window, SDL_Renderer*& renderer,
 
     SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "linear");
     SDL_RenderSetLogicalSize(renderer, screenWidth, screenHeight);
+    TTF_Init();
+    font = TTF_OpenFont("Font//FB.ttf", 38);
+    if (font == NULL) logSDLError(std::cout, "CreateFont", true);
 }
 
 void quitSDL(SDL_Window* gWindow, SDL_Renderer* gRenderer)

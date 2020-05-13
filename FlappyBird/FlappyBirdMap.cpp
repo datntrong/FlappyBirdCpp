@@ -16,7 +16,7 @@ void FlappyBirdMap::LoadMap()
     srand(time(0));
 
     for (int i = 15; i < cot; i += 8) {
-        int m = rand() % 6;
+        int m = rand() % 5;
         arr[m][i] = 2;
         arr[m + kc][i] = 3;
         for (int j = 0; j < m; j++) {
@@ -28,7 +28,7 @@ void FlappyBirdMap::LoadMap()
 
     }
     for (int i = 15 + 4; i < cot; i += 8) {
-        int m = rand() % 6 + 4;
+        int m = rand() % 5 + 4;
         arr[m][i] = 3;
         arr[m - kc][i] = 2;
         for (int j = 0; j < m - kc; j++) {

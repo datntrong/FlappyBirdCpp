@@ -1,4 +1,19 @@
-﻿  main.cpp
+﻿  Bird.cpp
 C:\Users\PC\Desktop\FlappyBird\FlappyBird\Game.h(17,2): warning C4091: 'typedef ': ignored on left of 'Map' when no variable is declared
 C:\Users\PC\Desktop\FlappyBird\FlappyBird\Game.h(24,2): warning C4091: 'typedef ': ignored on left of 'Input' when no variable is declared
+C:\Users\PC\Desktop\FlappyBird\FlappyBird\Bird.cpp(46,18): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+C:\Users\PC\Desktop\FlappyBird\FlappyBird\Bird.cpp(47,18): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+C:\Users\PC\Desktop\FlappyBird\FlappyBird\Bird.cpp(154,23): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+C:\Users\PC\Desktop\FlappyBird\FlappyBird\Bird.cpp(156,36): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+C:\Users\PC\Desktop\FlappyBird\FlappyBird\Bird.cpp(158,15): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+C:\Users\PC\Desktop\FlappyBird\FlappyBird\Bird.cpp(159,32): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+C:\Users\PC\Desktop\FlappyBird\FlappyBird\Bird.cpp(170,16): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+C:\Users\PC\Desktop\FlappyBird\FlappyBird\Bird.cpp(182,22): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+C:\Users\PC\Desktop\FlappyBird\FlappyBird\Bird.cpp(192,15): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+C:\Users\PC\Desktop\FlappyBird\FlappyBird\Bird.cpp(193,27): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+C:\Users\PC\Desktop\FlappyBird\FlappyBird\Bird.cpp(195,23): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+C:\Users\PC\Desktop\FlappyBird\FlappyBird\Bird.cpp(196,37): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+C:\Users\PC\Desktop\FlappyBird\FlappyBird\Bird.cpp(206,16): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+C:\Users\PC\Desktop\FlappyBird\FlappyBird\Bird.cpp(219,22): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+C:\Users\PC\Desktop\FlappyBird\FlappyBird\Bird.cpp(235,22): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
   FlappyBird.vcxproj -> C:\Users\PC\Desktop\FlappyBird\Debug\FlappyBird.exe

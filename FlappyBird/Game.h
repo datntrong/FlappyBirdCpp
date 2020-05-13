@@ -30,7 +30,7 @@ class Game
 public:
 	Game();
 	~Game();
-	void SetRect(const int& x, int& y) {
+	void SetRect(const int& x,const int& y) {
 		rect_.x = x, rect_.y = y;
 	}
 	SDL_Rect GetRect() const { return rect_; }
