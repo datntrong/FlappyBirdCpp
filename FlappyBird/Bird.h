@@ -41,6 +41,7 @@ public:
 	void SetMapXY(const int mapx, const int mapy) { mapx_ = mapx; mapy_ = mapy; }
 	void ScrollingMap(Map& map_data) ;
 	bool cliiision() { return collision; };
+	
 
 private:
 	
@@ -48,11 +49,11 @@ private:
 	int mHeight;
 
 
-	float xval;
-	float yval;
+	float mVelX;
+	float mVelY;
 
-	float xpos;
-	float ypos;
+	float mPosX;
+	float mPosY;
 
 
 	

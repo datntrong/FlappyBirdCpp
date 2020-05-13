@@ -8,10 +8,10 @@ LTexture::LTexture()
 	mWidth = 0;
 	mHeight = 0;
 	
-	xval = 0;
-	yval = 0;
-	xpos = 0;
-	ypos = 0;
+	mVelX = 0;
+	mVelY = 0;
+	mPosX = 0;
+	mPosY = 0;
 
 	frame = 0;
 	mapx_ = 0;
@@ -43,8 +43,8 @@ void LTexture::render(SDL_Renderer* renderer)
 	loadFromFile("Image//bird3.png", renderer);
 
 
-	rect_.x = xpos -mapx_;
-	rect_.y = ypos -mapy_;
+	rect_.x = mPosX -mapx_;
+	rect_.y = mPosY -mapy_;
 	
 	
 	frame++;
@@ -77,15 +77,24 @@ void LTexture::Inputkeyboard(SDL_Event e, SDL_Renderer* renderer)
 	{
 		switch (e.key.keysym.sym)
 		{
-		case SDLK_UP:
-		{
-			status = JUMB_UP;
-			input.up_ = 1;
-		}
+			case SDLK_UP:
+			{
+				status = JUMB_UP;
+				input.up_ = 1;
+			}
+			break;
+
+			case SDLK_SPACE:
+			{
+				status = JUMB_UP;
+				input.up_ = 1;
+			}
 			break;
 		}
 	}
 }
+
+
 
 void LTexture::loadMedia() {
 	if (mWidth > 0 && mHeight > 0)
@@ -107,20 +116,20 @@ void LTexture::loadMedia() {
 
 void LTexture::Player(Map& map_data)
 {	
-	xval = xval ;
-	xval += SCROLLING_SPEED;;
-	yval += GRAVITY_SPEED;
+	mVelX = mVelX;
+	mVelX += SCROLLING_SPEED;;
+	mVelY += GRAVITY_SPEED;
 
-	if (yval >= MAX_SPEED) yval = MAX_SPEED;
-	if (xval >= MAX_SCROLLING_SPEED) xval = MAX_SCROLLING_SPEED;
+	if (mVelY >= MAX_SPEED) mVelY = MAX_SPEED;
+	if (mVelX >= MAX_SCROLLING_SPEED) mVelX = MAX_SCROLLING_SPEED;
 	
-	xpos += xval;
-	ypos += yval;
+	mPosX += mVelX;
+	mPosY += mVelY;
 
 	
 
 	if (input.up_ == 1) {
-		yval = yval - JUMB_SPEED;
+		mVelY = mVelY - JUMB_SPEED;
 		
 		input.up_ = 0;
 	}
@@ -142,34 +151,34 @@ void LTexture::Checkmap(Map& map_data)
 
 	int height_min = mHeight < TILE_SIZE ? mHeight : TILE_SIZE;
 
-	x1 = (xpos + xval) / TILE_SIZE;
+	x1 = (mPosX + mVelX) / TILE_SIZE;
 
-	x2 = (xpos + xval + mWidth - 1) / TILE_SIZE;
+	x2 = (mPosX + mVelX + mWidth - 1) / TILE_SIZE;
 
-	y1 = (ypos) / TILE_SIZE;
-	y2 = (ypos + height_min - 1) / TILE_SIZE;
+	y1 = (mPosY) / TILE_SIZE;
+	y2 = (mPosY + height_min - 1) / TILE_SIZE;
 
 	if (x1 >= 0 && x2 < MAX_MAP_X && y1 >= 0 && y2 < MAX_MAP_Y)
 	{
-		if (xval > 0)
+		if (mVelX > 0)
 		{
 			if (map_data.tile[y1][x2] != 0 || map_data.tile[y2][x2] != 0)
 			{
 				
-				xpos = x2 * TILE_SIZE;
-				xpos -= mWidth + 1;
-				xval = 0;
+				mPosX = x2 * TILE_SIZE;
+				mPosX -= mWidth + 1;
+				mVelX = 0;
 				
 				
 				collision = true;
 			}
 		}
-		else if (xval < 0)
+		else if (mVelX < 0)
 		{
 			if (map_data.tile[y1][x1] != 0 || map_data.tile[y2][x1] != 0)
 			{
-				xpos = (x1 + 1) * TILE_SIZE;
-				xval = 0;
+				mPosX = (x1 + 1) * TILE_SIZE;
+				mVelX = 0;
 				collision = true;
 			}
 		}
@@ -178,33 +187,33 @@ void LTexture::Checkmap(Map& map_data)
 
 
 	int width_min = mWidth < TILE_SIZE ? mWidth : TILE_SIZE;
-	x1 = (xpos) / TILE_SIZE;
-	x2 = (xpos + width_min) / TILE_SIZE;
+	x1 = (mPosX) / TILE_SIZE;
+	x2 = (mPosX + width_min) / TILE_SIZE;
 
-	y1 = (ypos + yval) / TILE_SIZE;
-	y2 = (ypos + yval + mHeight - 1) / TILE_SIZE;
+	y1 = (mPosY + mVelY) / TILE_SIZE;
+	y2 = (mPosY + mVelY + mHeight - 1) / TILE_SIZE;
 
 	if (x1 >= 0 && x2 < MAX_MAP_Y && y1 >= 0 && y2 < MAX_MAP_Y)
 	{
-		if (yval > 0)
+		if (mVelY > 0)
 		{
 			if (map_data.tile[y2][x1] != 0 || map_data.tile[y2][x2] != 0)
 			{	
 				
-				ypos = y2 * TILE_SIZE;
-				ypos -= (mHeight + 1);
-				yval = 0;
+				mPosY = y2 * TILE_SIZE;
+				mPosY -= (mHeight + 1);
+				mVelY = 0;
 				
 				
 				collision = true;
 			}
 		}
-		else if (yval < 0)
+		else if (mVelY < 0)
 		{
 			if (map_data.tile[y1][x1] != 0 || map_data.tile[y1][x2] != 0)
 			{
-				ypos = (y1 + 1) * TILE_SIZE;
-				yval = 0;
+				mPosY = (y1 + 1) * TILE_SIZE;
+				mVelY = 0;
 				collision = true;
 			}
 		}
@@ -219,7 +228,7 @@ void LTexture::Checkmap(Map& map_data)
 
 void LTexture::ScrollingMap(Map& map_data)
 {
-	map_data.start_x_ = xpos;
+	map_data.start_x_ = mPosX;
 	map_data.start_y_ = 0;
 }
 		

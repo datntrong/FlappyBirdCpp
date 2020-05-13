@@ -1,33 +1,4 @@
-﻿  Bird.cpp
+﻿  main.cpp
 C:\Users\PC\Desktop\FlappyBird\FlappyBird\Game.h(17,2): warning C4091: 'typedef ': ignored on left of 'Map' when no variable is declared
 C:\Users\PC\Desktop\FlappyBird\FlappyBird\Game.h(24,2): warning C4091: 'typedef ': ignored on left of 'Input' when no variable is declared
-C:\Users\PC\Desktop\FlappyBird\FlappyBird\Bird.cpp(46,17): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
-C:\Users\PC\Desktop\FlappyBird\FlappyBird\Bird.cpp(47,17): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
-C:\Users\PC\Desktop\FlappyBird\FlappyBird\Bird.cpp(145,21): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
-C:\Users\PC\Desktop\FlappyBird\FlappyBird\Bird.cpp(147,34): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
-C:\Users\PC\Desktop\FlappyBird\FlappyBird\Bird.cpp(149,14): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
-C:\Users\PC\Desktop\FlappyBird\FlappyBird\Bird.cpp(150,31): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
-C:\Users\PC\Desktop\FlappyBird\FlappyBird\Bird.cpp(159,15): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-C:\Users\PC\Desktop\FlappyBird\FlappyBird\Bird.cpp(171,21): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-C:\Users\PC\Desktop\FlappyBird\FlappyBird\Bird.cpp(181,14): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
-C:\Users\PC\Desktop\FlappyBird\FlappyBird\Bird.cpp(182,26): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
-C:\Users\PC\Desktop\FlappyBird\FlappyBird\Bird.cpp(184,21): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
-C:\Users\PC\Desktop\FlappyBird\FlappyBird\Bird.cpp(185,35): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
-C:\Users\PC\Desktop\FlappyBird\FlappyBird\Bird.cpp(194,15): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-C:\Users\PC\Desktop\FlappyBird\FlappyBird\Bird.cpp(206,21): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-C:\Users\PC\Desktop\FlappyBird\FlappyBird\Bird.cpp(222,22): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
-  FlappyBirdMap.cpp
-C:\Users\PC\Desktop\FlappyBird\FlappyBird\Game.h(17,2): warning C4091: 'typedef ': ignored on left of 'Map' when no variable is declared
-C:\Users\PC\Desktop\FlappyBird\FlappyBird\Game.h(24,2): warning C4091: 'typedef ': ignored on left of 'Input' when no variable is declared
-C:\Users\PC\Desktop\FlappyBird\FlappyBird\FlappyBirdMap.cpp(16,15): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
-  Game.cpp
-C:\Users\PC\Desktop\FlappyBird\FlappyBird\Game.h(17,2): warning C4091: 'typedef ': ignored on left of 'Map' when no variable is declared
-C:\Users\PC\Desktop\FlappyBird\FlappyBird\Game.h(24,2): warning C4091: 'typedef ': ignored on left of 'Input' when no variable is declared
-  SDL_utils.cpp
-C:\Users\PC\Desktop\FlappyBird\FlappyBird\SDL_utils.cpp(44,5): warning C4551: function call missing argument list
-  main.cpp
-C:\Users\PC\Desktop\FlappyBird\FlappyBird\Game.h(17,2): warning C4091: 'typedef ': ignored on left of 'Map' when no variable is declared
-C:\Users\PC\Desktop\FlappyBird\FlappyBird\Game.h(24,2): warning C4091: 'typedef ': ignored on left of 'Input' when no variable is declared
-C:\Users\PC\Desktop\FlappyBird\FlappyBird\main.cpp(36,2): warning C4551: function call missing argument list
-  Generating Code...
   FlappyBird.vcxproj -> C:\Users\PC\Desktop\FlappyBird\Debug\FlappyBird.exe

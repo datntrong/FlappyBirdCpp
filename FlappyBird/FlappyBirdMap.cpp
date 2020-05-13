@@ -110,7 +110,7 @@ void FlappyBirdMap::DrawMap(SDL_Renderer* screen)
     map_y = game_map_.start_y_ / TILE_SIZE;
 
     y1 = (game_map_.start_y_ % TILE_SIZE) * -1;
-    y2 = y1 + 500 + (y1 == 0 ? 0 : TILE_SIZE);
+    y2 = y1 + 500 + (y1 == 0 ? 0 : TILE_SIZE); //500=SCR_HEIGHT
 
 
     for (int i = y1; i < y2; i += TILE_SIZE)
@@ -128,6 +128,7 @@ void FlappyBirdMap::DrawMap(SDL_Renderer* screen)
             }
             map_x++;
         }
+
         map_y++;
     }
 }

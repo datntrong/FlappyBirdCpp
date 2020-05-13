@@ -25,7 +25,6 @@ const int MAX_MAP_Y = 10;
 
 
 
-
 void logSDLError(std::ostream& os,
 	const std::string& msg, bool fatal = false);
 
