@@ -1,38 +1,42 @@
 #include "Bird.h"
+Audio jump;
 
 
 
 LTexture::LTexture()
 {
-	
+	mCollider.w = 72;
+	mCollider.h = 50;
 	mWidth = 0;
 	mHeight = 0;
-	
+
 	mVelX = 0;
 	mVelY = 0;
-	mPosX = 0;
-	mPosY = 0;
+	mPosX = 100;
+	mPosY = 100;
 	point = 0;
 	frame = 0;
 	mapx_ = 0;
 	mapy_ = 0;
 	collision = false;
+	jump.load("Audio//wing.wav");
 }
 
 LTexture::~LTexture() {
 
 }
 
-bool LTexture::loadFromFile(std::string path,SDL_Renderer* renderer)
+bool LTexture::loadFromFile(std::string path, SDL_Renderer* renderer)
 {
 	bool success = Game::LoadImage(path, renderer);
 	if (success == true)
 	{
 		mWidth = rect_.w / WALKING_ANIMATION_FRAMES;
-		mHeight = rect_.h ;
+		mHeight = rect_.h;
 	}
 
 	return success;
+
 }
 
 
@@ -43,13 +47,13 @@ void LTexture::render(SDL_Renderer* renderer)
 	loadFromFile("Image//bird3.png", renderer);
 
 
-	rect_.x = mPosX -mapx_;
-	rect_.y = mPosY -mapy_;
-	
-	
+	rect_.x = mPosX - mapx_;
+	rect_.y = mPosY - mapy_;
+
+	//Go to next frame
 	frame++;
 	if (frame >= 3) frame = 0;
-	
+
 
 	SDL_Rect* currentClip = &gSpriteClips[frame];
 	//Set rendering space and render to screen
@@ -61,15 +65,15 @@ void LTexture::render(SDL_Renderer* renderer)
 		renderQuad.w = currentClip->w;
 		renderQuad.h = currentClip->h;
 	}
-	
+
 	//Render to screen
 	SDL_RenderCopy(renderer, gTexture, currentClip, &renderQuad);
-	//Go to next frame
-	
+
+
 
 	//Cycle animation
-	
-	
+
+
 }
 void LTexture::Inputkeyboard(SDL_Event e, SDL_Renderer* renderer)
 {
@@ -77,19 +81,19 @@ void LTexture::Inputkeyboard(SDL_Event e, SDL_Renderer* renderer)
 	{
 		switch (e.key.keysym.sym)
 		{
-			case SDLK_UP:
-			{
-				status = JUMB_UP;
-				input.up_ = 1;
-			}
-			break;
+		case SDLK_UP:
+		{
+			status = JUMP_UP;
+			input.up_ = 1;
+		}
+		break;
 
-			case SDLK_SPACE:
-			{
-				status = JUMB_UP;
-				input.up_ = 1;
-			}
-			break;
+		case SDLK_SPACE:
+		{
+			status = JUMP_UP;
+			input.up_ = 1;
+		}
+		break;
 		}
 	}
 }
@@ -97,144 +101,118 @@ void LTexture::Inputkeyboard(SDL_Event e, SDL_Renderer* renderer)
 
 
 void LTexture::loadMedia() {
-	if (mWidth > 0 && mHeight > 0)
-	{
+	gSpriteClips[0].x = 0;
+	gSpriteClips[0].y = 0;
+	gSpriteClips[0].w = BIRD_WIDTH;
+	gSpriteClips[0].h = BIRD_HEIGHT;
 
-		for (int i = 0; i < WALKING_ANIMATION_FRAMES; i++)
-		{
-			gSpriteClips[i].x = i*mWidth;
-			gSpriteClips[i].y = 0;
-			gSpriteClips[i].w = mWidth;
-			gSpriteClips[i].h = mHeight;
-		}
+	gSpriteClips[1].x = 72;
+	gSpriteClips[1].y = 0;
+	gSpriteClips[1].w = BIRD_WIDTH;
+	gSpriteClips[1].h = BIRD_HEIGHT;
 
-		
-
-	}
+	gSpriteClips[2].x = 144;
+	gSpriteClips[2].y = 0;
+	gSpriteClips[2].w = BIRD_WIDTH;
+	gSpriteClips[2].h = BIRD_HEIGHT;
 }
 
-
-void LTexture::Player(Map& map_data)
-{	
+void LTexture::Movepine() {
 	mVelX = mVelX;
-	mVelX += SCROLLING_SPEED;;
+
 	mVelY += GRAVITY_SPEED;
 
 	if (mVelY >= MAX_SPEED) mVelY = MAX_SPEED;
-	if (mVelX >= MAX_SCROLLING_SPEED) mVelX = MAX_SCROLLING_SPEED;
-	
-	mPosX += mVelX;
-	mPosY += mVelY;
-
-	
 
 	if (input.up_ == 1) {
-		mVelY = mVelY - JUMB_SPEED;
-		
+		mVelY = mVelY - JUMP_SPEED;
 		input.up_ = 0;
+
+		jump.play();
+
+
 	}
-
-	
-
-	Checkmap(map_data);
-	ScrollingMap(map_data);
+	mPosX += mVelX;
+	mCollider.x = mPosX;
+	//Move the dot up or down
+	mPosY += mVelY;
+	mCollider.y = mPosY;
 }
 
 
-void LTexture::Checkmap(Map& map_data)
+void LTexture::move(SDL_Rect& wall)
 {
-	int x1 = 0;
-	int x2 = 0;
 
-	int y1 = 0;
-	int y2 = 0;
-
-	int height_min = mHeight < TILE_SIZE ? mHeight : TILE_SIZE;
-
-	x1 = (mPosX + mVelX) / TILE_SIZE;
-
-	x2 = (mPosX + mVelX + mWidth - 1) / TILE_SIZE;
-
-	y1 = (mPosY) / TILE_SIZE;
-	y2 = (mPosY + height_min - 1) / TILE_SIZE;
-
-	if (x1 >= 0 && x2 < MAX_MAP_X && y1 >= 0 && y2 < MAX_MAP_Y)
+	if (checkCollision(wall)) collision = true;
+	//If the dot collided or went too far to the left or right
+	if ((mPosX < 0) || (mPosX + BIRD_WIDTH > SCREEN_WIDTH) || checkCollision(wall))
 	{
-		if (mVelX > 0)
-		{
-			if (map_data.tile[y1][x2] < 0 || map_data.tile[y2][x2] < 0) point++;
-
-			if (map_data.tile[y1][x2] > 0 || map_data.tile[y2][x2] > 0)
-			{
-				
-				mPosX = x2 * TILE_SIZE;
-				mPosX -= mWidth + 1;
-				mVelX = 0;
-				
-				
-				collision = true;
-			}
-		}
-		else if (mVelX < 0)
-		{
-			if (map_data.tile[y1][x1] > 0 || map_data.tile[y2][x1] > 0)
-			{
-				mPosX = (x1 + 1) * TILE_SIZE;
-				mVelX = 0;
-				collision = true;
-			}
-		}
+		//Move back
+		mPosX -= mVelX;
+		mCollider.x = mPosX;
 	}
 
 
 
-	int width_min = mWidth < TILE_SIZE ? mWidth : TILE_SIZE;
-	x1 = (mPosX) / TILE_SIZE;
-	x2 = (mPosX + width_min) / TILE_SIZE;
-
-	y1 = (mPosY + mVelY) / TILE_SIZE;
-	y2 = (mPosY + mVelY + mHeight - 1) / TILE_SIZE;
-
-	if (x1 >= 0 && x2 < MAX_MAP_Y && y1 >= 0 && y2 < MAX_MAP_Y)
+	//If the dot collided or went too far up or down
+	if ((mPosY < 0) || (mPosY + BIRD_WIDTH > SCREEN_HEIGHT) || checkCollision(wall))
 	{
-		if (mVelY > 0)
-		{
-			if (map_data.tile[y2][x1] < 0 || map_data.tile[y2][x2] < 0) point++;
-			if (map_data.tile[y2][x1] > 0 || map_data.tile[y2][x2] > 0)
-			{	
-				
-				mPosY = y2 * TILE_SIZE;
-				mPosY -= (mHeight + 1);
-				mVelY = 0;
-				
-				
-				collision = true;
-			}
-		}
-		else if (mVelY < 0)
-		{
-			if (map_data.tile[y1][x1] < 0 || map_data.tile[y1][x2] < 0) point++;
-			if (map_data.tile[y1][x1] > 0 || map_data.tile[y1][x2] > 0)
-			{
-				mPosY = (y1 + 1) * TILE_SIZE;
-				mVelY = 0;
-				collision = true;
-			}
-		}
-
+		//Move back
+		mPosY -= mVelY;
+		mCollider.y = mPosY;
 	}
 
-
-
-	
 }
 
 
-void LTexture::ScrollingMap(Map& map_data)
+bool LTexture::checkCollision(SDL_Rect b)
 {
-	map_data.start_x_ = mPosX;
-	map_data.start_y_ = 0;
+	//The sides of the rectangles
+	int leftA, leftB;
+	int rightA, rightB;
+	int topA, topB;
+	int bottomA, bottomB;
+
+	//Calculate the sides of rect A
+	leftA = mCollider.x;
+	rightA = mCollider.x + mCollider.w;
+	topA = mCollider.y;
+	bottomA = mCollider.y + mCollider.h;
+
+	//Calculate the sides of rect B
+	leftB = b.x;
+	rightB = b.x + b.w;
+	topB = b.y;
+	bottomB = b.y + b.h;
+
+	//If any of the sides from A are outside of B
+	if (bottomA <= topB)
+	{
+		return false;
+	}
+
+	if (topA >= bottomB)
+	{
+		return false;
+	}
+
+	if (rightA <= leftB)
+	{
+		return false;
+	}
+
+	if (leftA >= rightB)
+	{
+		return false;
+	}
+
+	//If none of the sides from A are outside B
+	return true;
 }
-		
-	
+
+
+
+
+
+
 

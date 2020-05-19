@@ -4,17 +4,6 @@
 #define GAME_H
 #include "SDL_utils.h"
 
-typedef struct Map
-{
-	int start_x_;
-	int start_y_;
-
-	int max_x_;
-	int max_y_;
-
-	int tile[MAX_MAP_Y][MAX_MAP_X];
-	//char gif ddo
-};
 
 typedef struct Input
 {
@@ -30,7 +19,7 @@ class Game
 public:
 	Game();
 	~Game();
-	void SetRect(const int& x,const int& y) {
+	void SetRect(const int& x, const int& y) {
 		rect_.x = x, rect_.y = y;
 	}
 	SDL_Rect GetRect() const { return rect_; }
@@ -38,11 +27,25 @@ public:
 
 	virtual bool LoadImage(std::string path, SDL_Renderer* screen);
 	void Render(SDL_Renderer* des, const SDL_Rect* clip = NULL);
-	
+
 	void Free();
 protected:
 	SDL_Texture* gTexture;
 	SDL_Rect rect_;
+};
+
+
+class Audio {
+public:
+	~Audio();
+	void load(const char* filename);
+	void play();
+	void stop();
+private:
+	SDL_AudioSpec wavSpec;
+	Uint32 wavLength;
+	Uint8* wavBuffer;
+	SDL_AudioDeviceID deviceId;
 };
 
 #endif // !GAME_H

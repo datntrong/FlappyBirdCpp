@@ -36,6 +36,7 @@ void initSDL(SDL_Window*& window, SDL_Renderer*& renderer,
     TTF_Init();
     font = TTF_OpenFont("Font//FB.ttf", 38);
     if (font == NULL) logSDLError(std::cout, "CreateFont", true);
+    Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048);
 }
 
 void quitSDL(SDL_Window* gWindow, SDL_Renderer* gRenderer)
