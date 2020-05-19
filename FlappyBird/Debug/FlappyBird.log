@@ -1,12 +1,1 @@
-﻿  Bird.cpp
-C:\Users\PC\Desktop\FlappyBird\FlappyBird\Game.h(13,2): warning C4091: 'typedef ': ignored on left of 'Input' when no variable is declared
-C:\Users\PC\Desktop\FlappyBird\FlappyBird\Bird.cpp(50,18): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
-C:\Users\PC\Desktop\FlappyBird\FlappyBird\Bird.cpp(51,18): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
-C:\Users\PC\Desktop\FlappyBird\FlappyBird\Bird.cpp(136,16): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
-C:\Users\PC\Desktop\FlappyBird\FlappyBird\Bird.cpp(139,16): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
-C:\Users\PC\Desktop\FlappyBird\FlappyBird\Bird.cpp(152,17): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
-C:\Users\PC\Desktop\FlappyBird\FlappyBird\Bird.cpp(162,17): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
-  Game.cpp
-C:\Users\PC\Desktop\FlappyBird\FlappyBird\Game.h(13,2): warning C4091: 'typedef ': ignored on left of 'Input' when no variable is declared
-  Generating Code...
-  FlappyBird.vcxproj -> C:\Users\PC\Desktop\FlappyBird\Debug\FlappyBird.exe
+﻿  FlappyBird.vcxproj -> C:\Users\PC\Desktop\FlappyBird\Debug\FlappyBird.exe
