@@ -8,20 +8,5 @@ C:\Users\PC\Desktop\FlappyBird\FlappyBird\Bird.cpp(152,17): warning C4244: '=': 
 C:\Users\PC\Desktop\FlappyBird\FlappyBird\Bird.cpp(162,17): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
   Game.cpp
 C:\Users\PC\Desktop\FlappyBird\FlappyBird\Game.h(13,2): warning C4091: 'typedef ': ignored on left of 'Input' when no variable is declared
-  SDL_utils.cpp
-C:\Users\PC\Desktop\FlappyBird\FlappyBird\SDL_utils.cpp(48,5): warning C4551: function call missing argument list
-  main.cpp
-C:\Users\PC\Desktop\FlappyBird\FlappyBird\Game.h(13,2): warning C4091: 'typedef ': ignored on left of 'Input' when no variable is declared
-C:\Users\PC\Desktop\FlappyBird\FlappyBird\main.cpp(39,12): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
-C:\Users\PC\Desktop\FlappyBird\FlappyBird\main.cpp(198,44): warning C4244: '-=': conversion from 'float' to 'int', possible loss of data
-C:\Users\PC\Desktop\FlappyBird\FlappyBird\main.cpp(205,47): warning C4244: '-=': conversion from 'float' to 'int', possible loss of data
-C:\Users\PC\Desktop\FlappyBird\FlappyBird\main.cpp(216,44): warning C4244: '-=': conversion from 'float' to 'int', possible loss of data
-C:\Users\PC\Desktop\FlappyBird\FlappyBird\main.cpp(221,47): warning C4244: '-=': conversion from 'float' to 'int', possible loss of data
-C:\Users\PC\Desktop\FlappyBird\FlappyBird\main.cpp(232,44): warning C4244: '-=': conversion from 'float' to 'int', possible loss of data
-C:\Users\PC\Desktop\FlappyBird\FlappyBird\main.cpp(237,47): warning C4244: '-=': conversion from 'float' to 'int', possible loss of data
-C:\Users\PC\Desktop\FlappyBird\FlappyBird\main.cpp(248,44): warning C4244: '-=': conversion from 'float' to 'int', possible loss of data
-C:\Users\PC\Desktop\FlappyBird\FlappyBird\main.cpp(253,47): warning C4244: '-=': conversion from 'float' to 'int', possible loss of data
-C:\Users\PC\Desktop\FlappyBird\FlappyBird\main.cpp(264,44): warning C4244: '-=': conversion from 'float' to 'int', possible loss of data
-C:\Users\PC\Desktop\FlappyBird\FlappyBird\main.cpp(269,47): warning C4244: '-=': conversion from 'float' to 'int', possible loss of data
   Generating Code...
   FlappyBird.vcxproj -> C:\Users\PC\Desktop\FlappyBird\Debug\FlappyBird.exe

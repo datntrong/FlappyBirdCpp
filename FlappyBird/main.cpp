@@ -123,7 +123,7 @@ int main(int argc, char* argv[])
 
 			Game ground;
 			ground.LoadImage("Image//ground.png", gRenderer);
-			ground.SetRect(0, 400);
+			ground.SetRect(0, 440);
 			SDL_Rect gr = ground.GetRect();
 
 			int ypine1 = rand() % 130 + 60, ypine2 = rand() % 130 + 60, ypine3 = rand() % 130 + 60, ypine4 = rand() % 130 + 60, ypine5 = rand() % 130 + 60;
